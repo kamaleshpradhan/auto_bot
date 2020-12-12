@@ -10,10 +10,10 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '0f5c05c0-1ad6-415f-9c39-db08d228b14c'
+  #dockerRegistryServiceConnection: '0f5c05c0-1ad6-415f-9c39-db08d228b14c'
   #imageRepository: 'autobot'
   #containerRegistry: 'kamaleshpradhan.azurecr.io'
-  imageRepository: 'auto_bot'
+  imageRepository: 'kamaleshpradhan/auto_bot'
   containerRegistry: 'DockerHubKamaleshPradhan'
   dockerfilePath: '**/Dockerfile'
   #tag: '$(Build.BuildId)'
@@ -37,6 +37,6 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: $(containerRegistry)
         tags: |
           $(tag)
