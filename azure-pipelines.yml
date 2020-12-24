@@ -21,7 +21,7 @@ variables:
   
   # Agent VM image name
   #vmImageName: 'ubuntu-latest'
-  vmImageName: 'kam-hosted-win'
+  vmImageName: 'vs2017-win2016'
 
 stages:
 - stage: Build
