@@ -20,7 +20,8 @@ variables:
   tag: 'latest'
   
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  #vmImageName: 'ubuntu-latest'
+  vmImageName: 'kam-hosted-win'
 
 stages:
 - stage: Build
@@ -31,12 +32,20 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    # - task: Docker@2
+    #   displayName: Build and push an image to container registry
+    #   inputs:
+    #     command: buildAndPush
+    #     repository: $(imageRepository)
+    #     dockerfile: $(dockerfilePath)
+    #     containerRegistry: $(containerRegistry)
+    #     tags: |
+    #       $(tag)
+    - task: PowerShell@2
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(containerRegistry)
-        tags: |
-          $(tag)
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          
+          $headers=@{"Authorization" = "Bearer eyJ0eXAiOiAiVENWMiJ9.VmZEc2dvRXhSSk5pN3hadEtmTlBlbVJJZXQw.MTRjNjYyOWQtMGY2Yy00OWFiLWIyODgtNDcxNDRmN2U1Nzcy"}
+          Invoke-RestMethod -Method Get -Headers $headers -Uri "https://teamcity.services.kingsway.asos.com/app/rest/builds/buildType:(name:J3 D1 Initial Price),lookupLimit:2/artifacts/content/SIT-Automation/target/surefire-reports/TEST-junitresults.xml" -OutFile test.xml
